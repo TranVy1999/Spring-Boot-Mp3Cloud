@@ -17,8 +17,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.mp3cloud.security.Cache;
 import io.github.mp3cloud.security.CustomUser;
 import io.github.mp3cloud.security.JWTTokenProvider;
 import io.github.mp3cloud.security.UserSercurity;
@@ -37,7 +39,10 @@ public class Login {
 	private CustomUser customUser;
 
 	@Autowired
-	PasswordEncoder encoder;
+	private PasswordEncoder encoder;
+
+	@Autowired
+	private Cache cache;
 
 	@PostMapping("/signin")
 	public ResponseEntity<String> authenticateUser(@Valid @RequestBody UserDTO user) {
@@ -52,29 +57,38 @@ public class Login {
 
 		// Trả về jwt cho người dùng.
 		UserDetails currentUser = customUser.loadUserByUsername(user.getUserName());
-		return ResponseEntity.ok(jwt + currentUser.getUsername());
+		return ResponseEntity.ok(jwt);
 	}
 
-//	@PostMapping("/signup")
-//	public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto) {
-//		if (customUser.existsByUsername(dto.getUserName())) {
-//			return ResponseEntity.badRequest().body("Error: Username is already taken!");
-//		}
-//
-//		if (customUser.existsByEmail(dto.getEmail())) {
-//			return ResponseEntity.badRequest().body("Error: Email is already in use!");
-//		}
-//
-//		// Create new user's account
-////		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-////				encoder.encode(signUpRequest.getPassword()));
-//		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
-//		authority.add(new SimpleGrantedAuthority(dto.getUserType().getUserPosition()));
-//		UserSercurity myUser = new UserSercurity(dto.getUserName(), encoder.encode(dto.getPassword()), authority, dto);
-//
-//		customUser.save(myUser);
-//
-//		return ResponseEntity.ok("User registered successfully!");
-//	}
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto) {
+		if (customUser.existsByUsername(dto.getUserName())) {
+			return ResponseEntity.badRequest().body("Error: Username is already taken!");
+		}
+
+		if (customUser.existsByEmail(dto.getEmail())) {
+			return ResponseEntity.badRequest().body("Error: Email is already in use!");
+		}
+
+		// Create new user's account
+//		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+//				encoder.encode(signUpRequest.getPassword()));
+		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
+		authority.add(new SimpleGrantedAuthority(dto.getUserType().getUserPosition()));
+		UserSercurity myUser = new UserSercurity(dto.getUserName(), encoder.encode(dto.getPassword()), authority, dto);
+
+		customUser.save(myUser);
+
+		return ResponseEntity.ok("User registered successfully!");
+	}
+
+	@PostMapping("/signout")
+	public ResponseEntity<?> Logout(@RequestHeader("Authorization") String token) {
+		System.out.println(token);
+		cache.addTokenToExpireMap(token.substring(7).trim());
+		SecurityContextHolder.clearContext();
+		return ResponseEntity.ok("ok");
+
+	}
 
 }

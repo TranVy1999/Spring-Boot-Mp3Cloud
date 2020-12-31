@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -55,10 +56,9 @@ public class WebSercurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-//		http.authorizeRequests().antMatchers("/signup").permitAll().antMatchers("/signin").permitAll().anyRequest()
-//				.authenticated();
-		http.authorizeRequests().anyRequest().permitAll();
-		// http.addFilterBefore(jwtAuthenticationFilter(),
-		// UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().antMatchers("/signup").permitAll().antMatchers("/signin").permitAll().anyRequest()
+				.authenticated();
+//		http.authorizeRequests().anyRequest().permitAll();
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

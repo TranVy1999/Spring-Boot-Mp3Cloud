@@ -3,6 +3,7 @@ package io.github.mp3cloud.security;
 import java.util.Date;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JWTTokenProvider {
 
+	@Autowired
+	private Cache cache;
+	
 	// Đoạn JWT_SECRET này là bí mật, chỉ có phía server biết
 	private final String JWT_SECRET = "mp3Cloud_Music";
 
@@ -37,11 +41,16 @@ public class JWTTokenProvider {
 	public String getUserNameFromJWT(String token) {
 		return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
 	}
+	
+	public Date getTimeExpireFromJWT(String token) {
+		return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getExpiration();
+	}
+
 
 	public boolean validateToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
-			return true;
+			return cache.checkTokenExpire(authToken);
 		} catch (SignatureException e) {
 			logger.error("Invalid JWT signature -> Message: {} ", e);
 		} catch (MalformedJwtException e) {
