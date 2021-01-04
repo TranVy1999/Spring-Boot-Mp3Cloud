@@ -56,9 +56,10 @@ public class WebSercurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-		http.authorizeRequests().antMatchers("/signup").permitAll().antMatchers("/signin").permitAll().anyRequest()
+		http.authorizeRequests().antMatchers("/signup**").permitAll().antMatchers("/signin**").permitAll()
+				.antMatchers("/forgot_password**").permitAll().antMatchers("/reset_password**").permitAll().anyRequest()
 				.authenticated();
-//		http.authorizeRequests().anyRequest().permitAll();
+//		http.authorizeRequests().anyRequest().permitAll(); 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

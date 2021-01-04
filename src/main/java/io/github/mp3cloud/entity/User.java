@@ -37,9 +37,12 @@ public class User {
 	private Date birthDay;
 	@Column
 	private boolean activityStatus;
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "UserTypeID")
+
 	private UserType userType;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -142,6 +145,14 @@ public class User {
 
 	public void setActivityStatus(boolean activityStatus) {
 		this.activityStatus = activityStatus;
+	}
+
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
 	}
 
 }

@@ -20,6 +20,7 @@ public class UserConvert {
 		user.setEmail(dto.getEmail());
 		user.setPassword(dto.getPassword());
 		user.setActivityStatus(dto.isActivityStatus());
+		user.setResetPasswordToken(dto.getResetPasswordToken());
 		user.setUserType(convert.toEntity(dto.getUserType()));
 		return user;
 	}
@@ -37,6 +38,7 @@ public class UserConvert {
 		dto.setEmail(entity.getEmail());
 		dto.setPassword(entity.getPassword());
 		dto.setActivityStatus(entity.isActivityStatus());
+		dto.setResetPasswordToken(entity.getResetPasswordToken());
 		dto.setUserType(convert.toDTO(entity.getUserType()));
 		return dto;
 	}
@@ -52,6 +54,7 @@ public class UserConvert {
 		entity.setPassword(dto.getPassword());
 		entity.setActivityStatus(dto.isActivityStatus());
 		entity.setUserType(convert.toEntity(dto.getUserType()));
+		entity.setResetPasswordToken(dto.getResetPasswordToken());
 		return entity;
 	}
 
@@ -66,6 +69,7 @@ public class UserConvert {
 		dto.setPassword(myUser.getPassword());
 		dto.setActivityStatus(myUser.getDto().isActivityStatus());
 		dto.setUserType(myUser.getDto().getUserType());
+		dto.setResetPasswordToken(myUser.getDto().getResetPasswordToken());
 		return dto;
 	}
 

@@ -14,6 +14,7 @@ public class UserDTO {
 	private Date birthDay;
 	private boolean activityStatus;
 	private UserTypeDTO userType;
+	private String resetPasswordToken;
 
 	public long getId() {
 		return id;
@@ -93,6 +94,14 @@ public class UserDTO {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
 	}
 
 }

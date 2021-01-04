@@ -3,8 +3,11 @@ package io.github.mp3cloud.service.imp;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.github.mp3cloud.convert.UserConvert;
@@ -44,7 +47,6 @@ public class UserService implements IUserService {
 		if (newDTO.getId() != 0) {
 			User oldUser = userReposity.findById(newDTO.getId()).get();
 			user = userConvert.toEntity(newDTO, oldUser);
-
 		} else {
 			user = userConvert.toEntity(newDTO);
 		}
@@ -76,4 +78,28 @@ public class UserService implements IUserService {
 		return (int) userReposity.count();
 	}
 
+	@Override
+	public void updateResetPasswordToken(String token, String email) throws AccountNotFoundException {
+		User customer = userReposity.findByEmail(email);
+		if (customer != null) {
+			customer.setResetPasswordToken(token);
+			userReposity.save(customer);
+		} else {
+			throw new AccountNotFoundException("Could not find any customer with the email " + email);
+		}
+	}
+
+	@Override
+	public UserDTO getByResetPasswordToken(String token) {
+		return userConvert.toDTO(userReposity.findByResetPasswordToken(token));
+	}
+
+	@Override
+	public void updatePassword(UserDTO user, String newPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		user.setPassword(encodedPassword);
+		user.setResetPasswordToken(null);
+		save(user);
+	}
 }
