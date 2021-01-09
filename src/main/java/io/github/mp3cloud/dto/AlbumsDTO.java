@@ -10,10 +10,18 @@ public class AlbumsDTO {
 	private int totalTracks;
 	private boolean downloadPermit;
 	private ImageDTO image;
-	private GenreDTO gener;
+	private GenreDTO genreDTO;
 
 	public long getId() {
 		return id;
+	}
+
+	public GenreDTO getGenreDTO() {
+		return genreDTO;
+	}
+
+	public void setGenreDTO(GenreDTO genreDTO) {
+		this.genreDTO = genreDTO;
 	}
 
 	public ImageDTO getImage() {
@@ -22,14 +30,6 @@ public class AlbumsDTO {
 
 	public void setImage(ImageDTO image) {
 		this.image = image;
-	}
-
-	public GenreDTO getGener() {
-		return gener;
-	}
-
-	public void setGener(GenreDTO gener) {
-		this.gener = gener;
 	}
 
 	public void setId(long id) {

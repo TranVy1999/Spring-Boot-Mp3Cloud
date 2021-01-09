@@ -16,8 +16,8 @@ public class AlbumsComvert {
 		entity.setDownloadPermit(dto.isDownloadPermit());
 		entity.setReleasedDate(dto.getReleasedDate());
 		entity.setTotalTracks(dto.getTotalTracks());
-		entity.setGener(genre.toEntity(dto.getGener()));
-		entity.setImage(image.toEntity(dto.getImage()));
+		entity.setGener(genre.toEntity(dto.getGenreDTO()));
+//		entity.setImage(image.toEntity(dto.getImage()));
 		return entity;
 	}
 
@@ -28,7 +28,7 @@ public class AlbumsComvert {
 		if (entity.getId() != 0)
 			dto.setId(entity.getId());
 		dto.setDownloadPermit(entity.isDownloadPermit());
-		dto.setGener(genre.toDTO(entity.getGener()));
+		dto.setGenreDTO(genre.toDTO(entity.getGener()));
 		dto.setImage(image.toDTO(entity.getImage()));
 		dto.setName(entity.getName());
 		dto.setReleasedDate(entity.getReleasedDate());
@@ -43,7 +43,7 @@ public class AlbumsComvert {
 		entity.setDownloadPermit(dto.isDownloadPermit());
 		entity.setReleasedDate(dto.getReleasedDate());
 		entity.setTotalTracks(dto.getTotalTracks());
-		entity.setGener(genre.toEntity(dto.getGener()));
+		entity.setGener(genre.toEntity(dto.getGenreDTO()));
 		entity.setImage(image.toEntity(dto.getImage()));
 		return entity;
 	}

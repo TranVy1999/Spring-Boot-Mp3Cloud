@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Image")
 public class Image {
@@ -17,6 +19,7 @@ public class Image {
 	@Column
 	private String imgLocation;
 	@Column
+	@Type(type = "org.hibernate.type.StringNVarcharType")
 	private String name;
 
 	public long getId() {

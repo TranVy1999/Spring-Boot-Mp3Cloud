@@ -5,8 +5,18 @@ public class GenreDTO {
 	private long id;
 	private String name;
 
+	public GenreDTO(long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public long getId() {
 		return id;
+	}
+
+	public GenreDTO() {
+		super();
 	}
 
 	public void setId(long id) {

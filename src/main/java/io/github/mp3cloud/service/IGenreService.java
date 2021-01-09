@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import io.github.mp3cloud.dto.SongDTO;
+import io.github.mp3cloud.dto.GenreDTO;
 
-public interface ISongService {
+public interface IGenreService {
 
-	Collection<SongDTO> getAll(Pageable pageable);
+	Collection<GenreDTO> getAll(Pageable pageable);
 
-	SongDTO getById(long id);
+	GenreDTO getById(long id);
 
-	String save(List<SongDTO> newDTO);
+	String save(List<GenreDTO> newDTO);
 
 	void delete(long id);
 

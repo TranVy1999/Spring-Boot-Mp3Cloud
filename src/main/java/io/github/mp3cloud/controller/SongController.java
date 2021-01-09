@@ -1,5 +1,8 @@
 package io.github.mp3cloud.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,15 +36,16 @@ public class SongController {
 	}
 
 	@PostMapping(value = "/playlist")
-	public SongDTO createArtist(@RequestBody SongDTO model) {
-		return songService.save(model);
+	public String createArtist(@RequestBody Map<String, List<SongDTO>> model) {
+		model.entrySet().forEach(e -> songService.save(e.getValue()));
+		return "ok";
 	}
 
-	@PutMapping(value = "/playlist/{id}")
-	public SongDTO updateNew(@RequestBody SongDTO model, @PathVariable("id") long id) {
-		model.setId(id);
-		return songService.save(model);
-	}
+//	@PutMapping(value = "/playlist/{id}")
+//	public SongDTO updateNew(@RequestBody SongDTO model, @PathVariable("id") long id) {
+//		model.setId(id);
+//		return songService.save(model);
+//	}
 
 	@DeleteMapping(value = "/playlist")
 	public void deleteNew(@RequestBody long id) {

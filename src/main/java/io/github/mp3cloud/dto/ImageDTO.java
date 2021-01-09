@@ -30,4 +30,9 @@ public class ImageDTO {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "ImageDTO [id=" + id + ", imgLocation=" + imgLocation + ", name=" + name + "]";
+	}
+
 }

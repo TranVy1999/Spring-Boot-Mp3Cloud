@@ -2,6 +2,7 @@ package io.github.mp3cloud.service.imp;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -38,16 +39,18 @@ public class SingerService implements ISingerService {
 	}
 
 	@Override
-	public ArtistDTO save(ArtistDTO newDTO) {
+	public String save(List<ArtistDTO> newDTO) {
 		Artist artist = new Artist();
-		if (newDTO.getId() != 0) {
-			Artist oldArtist = singerRepository.findById(newDTO.getId()).get();
-			artist = artistConvert.toEntity(newDTO, oldArtist);
-		} else {
-			artist = artistConvert.toEntity(newDTO);
+		for (ArtistDTO artistDTO : newDTO) {
+			if (artistDTO.getId() != 0) {
+				Artist oldArtist = singerRepository.findById(artistDTO.getId()).get();
+				artist = artistConvert.toEntity(artistDTO, oldArtist);
+			} else {
+				artist = artistConvert.toEntity(artistDTO);
+			}
+			artist = singerRepository.save(artist);
 		}
-		artist = singerRepository.save(artist);
-		return artistConvert.toDTO(artist);
+		return "ok";
 	}
 
 	@Override

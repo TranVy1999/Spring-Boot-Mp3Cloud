@@ -2,6 +2,7 @@ package io.github.mp3cloud.service.imp;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,16 +24,18 @@ public class SongService implements ISongService {
 	private SongConvert songConvert;
 
 	@Override
-	public SongDTO save(SongDTO newDTO) {
+	public String save(List<SongDTO> newDTO) {
 		Song entity = new Song();
-		if (newDTO.getId() != 0) {
-			Song oldSong = songRepository.findById(newDTO.getId()).get();
-			entity = songConvert.toEntity(newDTO, oldSong);
-		} else {
-			entity = songConvert.toEntity(newDTO);
+		for (SongDTO songDTO : newDTO) {
+			if (songDTO.getId() != 0) {
+				Song oldSong = songRepository.findById(songDTO.getId()).get();
+				entity = songConvert.toEntity(songDTO, oldSong);
+			} else {
+				entity = songConvert.toEntity(songDTO);
+			}
+			entity = songRepository.save(entity);
 		}
-		entity = songRepository.save(entity);
-		return songConvert.toDTO(entity);
+		return "ok";
 	}
 
 	@Override

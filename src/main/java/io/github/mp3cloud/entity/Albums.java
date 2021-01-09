@@ -38,7 +38,7 @@ public class Albums {
 	@JoinColumn(name = "ImageID")
 	private Image image;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "GenerID")
 	private Genre gener;
 

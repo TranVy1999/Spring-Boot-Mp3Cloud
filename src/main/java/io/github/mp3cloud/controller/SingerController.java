@@ -1,5 +1,8 @@
 package io.github.mp3cloud.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.github.mp3cloud.controller.output.SingerOutput;
 import io.github.mp3cloud.service.ISingerService;
 import io.github.mp3cloud.dto.ArtistDTO;
+import io.github.mp3cloud.dto.ImageDTO;
 
 @RestController
 public class SingerController {
@@ -33,15 +37,19 @@ public class SingerController {
 	}
 
 	@PostMapping(value = "/singer")
-	public ArtistDTO createArtist(@RequestBody ArtistDTO model) {
-		return singerService.save(model);
+	public String createArtist(@RequestBody  Map<String,List<ArtistDTO>> model) {
+		model.entrySet().forEach(e -> singerService.save(e.getValue()));
+		return "ok";
 	}
 
-	@PutMapping(value = "/singer/{id}")
-	public ArtistDTO updateNew(@RequestBody ArtistDTO model, @PathVariable("id") long id) {
-		model.setId(id);
-		return singerService.save(model);
-	}
+//	@PutMapping(value = "/singer/{id}")
+//	public ArtistDTO updateNew(@RequestBody List<ArtistDTO> model, @PathVariable("id") long id) {
+//		for (ArtistDTO artistDTO : model) {
+//			artistDTO.setId(id);
+//			singerService.save(artistDTO)
+//		}
+//		return ;
+//	}
 
 	@DeleteMapping(value = "/singer/{id}")
 	public void deleteNew(@RequestBody long id) {

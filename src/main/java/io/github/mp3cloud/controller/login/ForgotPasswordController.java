@@ -28,9 +28,6 @@ import net.bytebuddy.utility.RandomString;
 @RestController
 public class ForgotPasswordController {
 
-//	@Autowired
-//	private JavaMailSender javaMailSender;
-
 	@Autowired
 	private IUserService userService;
 
@@ -74,7 +71,7 @@ public class ForgotPasswordController {
 			throws MessagingException, UnsupportedEncodingException {
 		String subject = "Lấy lại mật khẩu";
 		String content = "Xin chào," + "\n" + "Bạn có yêu cầu lấy lại mật khẩu." + "\n"
-				+ "Nhấn vào đây để thay đổi mật khẩu của bạn: " + "\n" + " link" + "\n" + "\n"
+				+ "Nhấn vào đây để thay đổi mật khẩu của bạn: " + "\n" +  link + "\n" + "\n"
 				+ "Hãy bỏ qua email này nếu bạn đã nhớ mật khẩu";
 		try {
 			MimeMessage msg = new MimeMessage(session);

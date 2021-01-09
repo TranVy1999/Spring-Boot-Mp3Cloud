@@ -1,6 +1,7 @@
 package io.github.mp3cloud.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +13,7 @@ public interface ISingerService {
 
 	ArtistDTO getById(long id);
 
-	ArtistDTO save(ArtistDTO newDTO);
+	String save(List<ArtistDTO> newDTO);
 
 	void delete(long ids);
 
