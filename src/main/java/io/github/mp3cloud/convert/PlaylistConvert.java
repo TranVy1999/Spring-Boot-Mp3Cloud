@@ -41,7 +41,7 @@ public class PlaylistConvert {
 			dto.setName(playlist.getName());
 			song = iSongRepository.getOne(playlist.getSong().getId());
 			
-			songDto.add(songConvert.toDTO(song));
+			songDto.add(songConvert.toDTO(song, song.getId()));
 			dto.setUserPlaylist(user.toDTO(playlist.getUserPlaylist()));
 		}
 		dto.setSong(songDto);

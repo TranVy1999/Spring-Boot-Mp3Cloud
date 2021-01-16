@@ -2,7 +2,6 @@ package io.github.mp3cloud.service.imp;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class SongService implements ISongService {
 
 	@Autowired
 	private SongConvert songConvert;
-
 
 	@Override
 	public String save(List<SongDTO> newDTO) {
@@ -78,7 +76,6 @@ public class SongService implements ISongService {
 	@Override
 	public SongDTO getLinkSong(String shareLinks) {
 		Song song = songRepository.findByShareLinks(shareLinks);
-		System.out.println(song.getShareLinks() + " linksong");
 		return songConvert.toDTO(song);
 	}
 

@@ -37,7 +37,6 @@ public class AlbumService implements IAlbumService {
 		Albums entity = new Albums();
 		Genre genre = null;
 		for (AlbumsDTO albumsDTO : newDTO) {
-			System.out.println(albumsDTO.getGenreDTO().getId());
 			genre = genreConvert.toEntity(genreService.getById(albumsDTO.getGenreDTO().getId()));
 			if (albumsDTO.getId() != 0) {
 				Albums oldAlbum = albumRepository.findById(albumsDTO.getId()).get();

@@ -19,7 +19,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Entity
 @Table(name = "Song")
-//@ConfigurationProperties(prefix = "file")
 public class Song {
 
 	@Id

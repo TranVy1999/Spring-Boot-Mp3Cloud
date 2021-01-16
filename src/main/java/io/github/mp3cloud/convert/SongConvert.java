@@ -1,6 +1,5 @@
 package io.github.mp3cloud.convert;
 
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +9,8 @@ import io.github.mp3cloud.entity.Image;
 import io.github.mp3cloud.entity.Song;
 import io.github.mp3cloud.repository.IAlbumRepository;
 import io.github.mp3cloud.repository.IImageRepository;
+import io.github.mp3cloud.dto.AlbumsDTO;
+import io.github.mp3cloud.dto.ImageDTO;
 import io.github.mp3cloud.dto.SongDTO;
 
 @Component
@@ -46,9 +47,6 @@ public class SongConvert {
 		SongDTO dto = new SongDTO();
 		AlbumsComvert albumsComvert = new AlbumsComvert();
 		ImageConvert imageConvert = new ImageConvert();
-//		Albums album = new Albums();
-//		Image image = new Image();
-		System.out.println(entity.getAlbums().getId() + " id album");
 		if (entity.getAlbums() != null) {
 			Albums album = albumRepository.findById(entity.getAlbums().getId()).get();
 			dto.setAlbum(albumsComvert.toDTO(album));
@@ -74,6 +72,26 @@ public class SongConvert {
 		entity.setAlbums(album.toEntity(dto.getAlbum()));
 		entity.setImage(image.toEntity(dto.getImage()));
 		return entity;
+	}
+
+	public SongDTO toDTO(Song entity, long id) {
+		SongDTO dto = new SongDTO();
+		AlbumsDTO album = new AlbumsDTO();
+		album.setId(entity.getAlbums().getId());
+		ImageDTO image = new ImageDTO();
+		image.setId(entity.getImage().getId());
+		if (entity.getAlbums() != null) {
+			dto.setAlbum(album);
+		}
+		if (entity.getImage() != null) {
+			dto.setImage(image);
+		}
+		if (entity.getId() != 0)
+			dto.setId(entity.getId());
+		dto.setDownloadPremit(entity.isDownloadPremit());
+		dto.setTitle(entity.getTitle());
+		dto.setShareLinks(entity.getShareLinks());
+		return dto;
 	}
 
 }

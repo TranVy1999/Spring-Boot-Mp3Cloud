@@ -52,7 +52,7 @@ public class SongController {
 //	}
 
 	@DeleteMapping(value = "/song/{id}")
-	public String deleteNew(@PathVariable("id") long id) {
+	public String deleteSong(@PathVariable("id") long id) {
 		songService.delete(id);
 		return "ok";
 	}

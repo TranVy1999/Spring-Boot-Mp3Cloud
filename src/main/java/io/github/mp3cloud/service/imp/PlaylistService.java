@@ -1,22 +1,16 @@
 package io.github.mp3cloud.service.imp;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.mp3cloud.convert.PlaylistConvert;
-import io.github.mp3cloud.dto.ArtistDTO;
 import io.github.mp3cloud.dto.PlaylistDTO;
 import io.github.mp3cloud.dto.SongDTO;
 import io.github.mp3cloud.dto.UserDTO;
-import io.github.mp3cloud.entity.Artist;
 import io.github.mp3cloud.entity.Playlist;
-import io.github.mp3cloud.entity.User;
 import io.github.mp3cloud.repository.IPlaylistRepository;
 import io.github.mp3cloud.service.IPlaylistService;
 import io.github.mp3cloud.service.IUserService;
