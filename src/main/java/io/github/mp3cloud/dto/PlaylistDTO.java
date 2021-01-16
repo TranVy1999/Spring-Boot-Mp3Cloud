@@ -1,17 +1,20 @@
 package io.github.mp3cloud.dto;
 
+import java.util.ArrayList;
+
 public class PlaylistDTO {
 
 	private long id;
 	private String name;
 	private UserDTO userPlaylist;
-	private SongDTO song;
+	private ArrayList<SongDTO> song;
 
-	public SongDTO getSong() {
+
+	public ArrayList<SongDTO> getSong() {
 		return song;
 	}
 
-	public void setSong(SongDTO song) {
+	public void setSong(ArrayList<SongDTO> song) {
 		this.song = song;
 	}
 

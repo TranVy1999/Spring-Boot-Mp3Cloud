@@ -10,18 +10,21 @@ public class ImageConvert {
 
 	public Image toEntity(ImageDTO dto) {
 		Image entity = new Image();
-		entity.setImgLocation(dto.getImgLocation());
-		entity.setName(dto.getName());
+		if (dto != null) {
+			entity.setImgLocation(dto.getImgLocation());
+			entity.setName(dto.getName());
+		}
 		return entity;
 	}
 
 	public ImageDTO toDTO(Image entity) {
 		ImageDTO dto = new ImageDTO();
-		if (entity.getId() != 0) {
-			dto.setId(entity.getId());
+		if (entity != null) {
+			if (entity.getId() != 0)
+				dto.setId(entity.getId());
+			dto.setImgLocation(entity.getImgLocation());
+			dto.setName(entity.getName());
 		}
-		dto.setImgLocation(entity.getImgLocation());
-		dto.setName(entity.getName());
 		return dto;
 	}
 

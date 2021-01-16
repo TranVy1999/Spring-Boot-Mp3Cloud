@@ -6,4 +6,6 @@ import io.github.mp3cloud.entity.Artist;
 
 public interface ISingerRepository extends JpaRepository<Artist, Long> {
 
+	Artist findByName(String nameArtist);
+
 }

@@ -37,7 +37,7 @@ public class SingerController {
 	}
 
 	@PostMapping(value = "/singer")
-	public String createArtist(@RequestBody  Map<String,List<ArtistDTO>> model) {
+	public String createArtist(@RequestBody Map<String, List<ArtistDTO>> model) {
 		model.entrySet().forEach(e -> singerService.save(e.getValue()));
 		return "ok";
 	}
@@ -52,7 +52,8 @@ public class SingerController {
 //	}
 
 	@DeleteMapping(value = "/singer/{id}")
-	public void deleteNew(@RequestBody long id) {
+	public String deleteNew(@PathVariable("id") long id) {
 		singerService.delete(id);
+		return "ok";
 	}
 }

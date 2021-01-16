@@ -3,6 +3,7 @@ package io.github.mp3cloud.service;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 
 import io.github.mp3cloud.dto.SongDTO;
@@ -18,4 +19,10 @@ public interface ISongService {
 	void delete(long id);
 
 	int totalItem();
+
+	SongDTO getLinkSong(String shareLinks);
+
+	Resource loadFileAsResource(String fileName) throws Exception;
+
+	SongDTO findByTitle(String title);
 }

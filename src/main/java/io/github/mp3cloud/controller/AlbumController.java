@@ -47,9 +47,10 @@ public class AlbumController {
 //		return albumService.save(model);
 //	}
 
-	@DeleteMapping(value = "/album")
-	public void deleteNew(@RequestBody long id) {
+	@DeleteMapping(value = "/album/{id}")
+	public String deleteNew(@PathVariable("id") long id) {
 		albumService.delete(id);
+		return "ok";
 	}
 
 }

@@ -40,9 +40,8 @@ public class User {
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "UserTypeID")
-
 	private UserType userType;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

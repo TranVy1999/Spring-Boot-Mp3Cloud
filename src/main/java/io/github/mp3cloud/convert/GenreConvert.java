@@ -10,10 +10,11 @@ public class GenreConvert {
 
 	public Genre toEntity(GenreDTO dto) {
 		Genre entity = new Genre();
-		if (dto.getId() != 0)
-			entity.setId(dto.getId());
-		entity.setName(dto.getName());
-//		entity.setAlbums(albums);
+		if (dto != null) {
+			if (dto.getId() != 0)
+				entity.setId(dto.getId());
+			entity.setName(dto.getName());
+		}
 		return entity;
 	}
 
@@ -27,7 +28,8 @@ public class GenreConvert {
 
 	public Genre toEntity(GenreDTO dto, Genre entity) {
 		entity.setName(dto.getName());
-//		entity.setAlbums(albums);
+		entity.setId(dto.getId());
+		;
 		return entity;
 	}
 }

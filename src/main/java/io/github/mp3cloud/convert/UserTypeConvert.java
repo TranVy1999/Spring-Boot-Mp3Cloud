@@ -10,6 +10,7 @@ public class UserTypeConvert {
 
 	public UserType toEntity(UserTypeDTO dto) {
 		UserType userType = new UserType();
+		userType.setId(dto.getId());
 		userType.setUserPosition(dto.getUserPosition());
 		return userType;
 	}
@@ -26,6 +27,13 @@ public class UserTypeConvert {
 	public UserType toEntity(UserTypeDTO dto, UserType entity) {
 		entity.setUserPosition(dto.getUserPosition());
 		return entity;
+	}
+
+	public UserTypeDTO toDTO(UserTypeDTO userType) {
+		UserTypeDTO dto = new UserTypeDTO();
+		dto.setId(userType.getId());
+		dto.setUserPosition(userType.getUserPosition());
+		return dto;
 	}
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Genre")
 public class Genre {
@@ -19,6 +21,7 @@ public class Genre {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
+	@Type(type = "org.hibernate.type.StringNVarcharType")
 	private String name;
 
 	@OneToMany(mappedBy = "gener", cascade = CascadeType.ALL)

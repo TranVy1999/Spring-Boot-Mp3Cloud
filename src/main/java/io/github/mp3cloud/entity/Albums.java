@@ -10,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "Albums")
@@ -23,6 +24,7 @@ public class Albums {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
+	@Type(type = "org.hibernate.type.StringNVarcharType")
 	private String name;
 	@Column
 	private Date releasedDate;

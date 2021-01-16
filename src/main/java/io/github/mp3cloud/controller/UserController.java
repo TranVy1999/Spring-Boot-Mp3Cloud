@@ -38,7 +38,8 @@ public class UserController {
 	}
 
 	@DeleteMapping(value = "/user/{id}")
-	public void deleteNew(@RequestBody long ids) {
-		userService.delete(ids);
+	public String deleteNew(@PathVariable("id") long id) {
+		userService.delete(id);
+		return "ok";
 	}
 }

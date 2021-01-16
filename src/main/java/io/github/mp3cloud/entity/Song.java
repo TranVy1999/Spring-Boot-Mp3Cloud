@@ -14,14 +14,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 @Entity
 @Table(name = "Song")
+//@ConfigurationProperties(prefix = "file")
 public class Song {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
+	@Type(type = "org.hibernate.type.StringNVarcharType")
 	private String title;
 	@Column
 	private boolean downloadPremit;

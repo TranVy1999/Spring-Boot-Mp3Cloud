@@ -1,17 +1,19 @@
 package io.github.mp3cloud.dto;
 
+import java.util.List;
+
 public class SungByDTO {
 
 	private long id;
-	private SongDTO song;
+	private List<SongDTO> song;
 	private ArtistDTO artist;
 	private SongDTO album;
 
-	public SongDTO getSong() {
+	public List<SongDTO> getSong() {
 		return song;
 	}
 
-	public void setSong(SongDTO song) {
+	public void setSong(List<SongDTO> song) {
 		this.song = song;
 	}
 

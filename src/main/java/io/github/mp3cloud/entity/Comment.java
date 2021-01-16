@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Comment")
 public class Comment {
@@ -17,6 +19,7 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
+	@Type(type = "org.hibernate.type.StringNVarcharType")
 	private String Contents;
 	@Column
 	private String createAt;

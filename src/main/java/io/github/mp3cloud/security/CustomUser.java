@@ -82,6 +82,7 @@ public class CustomUser implements UserDetailsService {
 	public void save(UserSercurity myUser) {
 		UserDTO dto = new UserDTO();
 		dto = userCovert.toDTO(myUser);
+		System.out.println(dto.getUserType().getId() + " id");
 		userService.save(dto);
 	}
 

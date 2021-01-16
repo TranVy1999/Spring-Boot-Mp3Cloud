@@ -47,6 +47,7 @@ public class Login {
 	@PostMapping("/signin")
 	public ResponseEntity<String> authenticateUser(@Valid @RequestBody UserDTO user) {
 		// Xác thực từ username và password.
+		System.out.println(user.getUserName() + " username");
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
@@ -57,6 +58,7 @@ public class Login {
 
 		// Trả về jwt cho người dùng.
 		UserDetails currentUser = customUser.loadUserByUsername(user.getUserName());
+		System.out.println(currentUser.getUsername() + " username");
 		return ResponseEntity.ok(jwt);
 	}
 
@@ -73,8 +75,9 @@ public class Login {
 		// Create new user's account
 //		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
 //				encoder.encode(signUpRequest.getPassword()));
+		String position = "USER";
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
-		authority.add(new SimpleGrantedAuthority(dto.getUserType().getUserPosition()));
+		authority.add(new SimpleGrantedAuthority(position));
 		UserSercurity myUser = new UserSercurity(dto.getUserName(), encoder.encode(dto.getPassword()), authority, dto);
 
 		customUser.save(myUser);
@@ -84,11 +87,9 @@ public class Login {
 
 	@PostMapping("/signout")
 	public ResponseEntity<?> Logout(@RequestHeader("Authorization") String token) {
-		System.out.println(token);
 		cache.addTokenToExpireMap(token.substring(7).trim());
 		SecurityContextHolder.clearContext();
 		return ResponseEntity.ok("ok");
-
 	}
 
 }
