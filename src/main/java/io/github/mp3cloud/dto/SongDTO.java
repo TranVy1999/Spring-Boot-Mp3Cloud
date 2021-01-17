@@ -1,5 +1,8 @@
 package io.github.mp3cloud.dto;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties(prefix = "file")
 public class SongDTO {
 
 	private long id;

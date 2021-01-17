@@ -47,7 +47,6 @@ public class Login {
 	@PostMapping("/signin")
 	public ResponseEntity<String> authenticateUser(@Valid @RequestBody UserDTO user) {
 		// Xác thực từ username và password.
-		System.out.println(user.getUserName() + " username");
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 

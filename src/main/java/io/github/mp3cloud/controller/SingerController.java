@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,20 @@ public class SingerController {
 	@Autowired
 	private ISingerService singerService;
 
-	@GetMapping(value = "/singer")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
+	@GetMapping(value = "user/singer")
 	public SingerOutput showNew(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+		SingerOutput singerOutput = new SingerOutput();
+		singerOutput.setPage(page);
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		singerOutput.setListResult(singerService.getAll(pageable));
+		singerOutput.setTotalPage((int) Math.ceil((double) (singerService.totalItem()) / limit));
+		return singerOutput;
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping(value = "admin/singer")
+	public SingerOutput show(@RequestParam("page") int page, @RequestParam("limit") int limit) {
 		SingerOutput singerOutput = new SingerOutput();
 		singerOutput.setPage(page);
 		Pageable pageable = PageRequest.of(page - 1, limit);

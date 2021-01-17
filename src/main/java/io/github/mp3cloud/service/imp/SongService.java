@@ -1,9 +1,13 @@
 package io.github.mp3cloud.service.imp;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +17,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.github.mp3cloud.convert.SongConvert;
 import io.github.mp3cloud.entity.Song;
@@ -23,7 +29,19 @@ import io.github.mp3cloud.dto.SongDTO;
 @Service
 public class SongService implements ISongService {
 
-	private final Path fileStorageLocation = Paths.get("D:\\Spring_Boot_Music\\Spring-Boot-Mp3Cloud\\media\\upload");
+	private final Path fileStorageLocation = Paths.get("src\\main\\resources\\static\\music");
+//			.toAbsolutePath()
+//			.normalize();
+
+	@Autowired
+	public SongService(SongDTO fileStorageProperties) {
+
+		try {
+			Files.createDirectories(this.fileStorageLocation);
+		} catch (Exception ex) {
+			throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
+		}
+	}
 
 	@Autowired
 	private ISongRepository songRepository;
@@ -83,7 +101,6 @@ public class SongService implements ISongService {
 	public Resource loadFileAsResource(String fileName) throws Exception {
 		try {
 			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-			System.out.println(filePath.toUri() + " filePath");
 			Resource resource = new UrlResource(filePath.toUri());
 			if (resource.exists()) {
 				return resource;
@@ -93,13 +110,33 @@ public class SongService implements ISongService {
 		} catch (MalformedURLException ex) {
 			throw new FileNotFoundException("File not found " + fileName);
 		}
-//		return null;
 	}
 
 	@Override
 	public SongDTO findByTitle(String title) {
 		Song song = songRepository.findByTitle(title);
 		return songConvert.toDTO(song);
+	}
+
+	@Override
+	public String storeFile(MultipartFile file) {
+		// Normalize file name
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+		try {
+			// Check if the file's name contains invalid characters
+			if (fileName.contains("..")) {
+				throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
+			}
+
+			// Copy file to the target location (Replacing existing file with the same name)
+			Path targetLocation = this.fileStorageLocation.resolve(fileName);
+			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+			return fileName;
+		} catch (IOException ex) {
+			throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+		}
 	}
 
 }
